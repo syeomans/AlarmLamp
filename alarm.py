@@ -29,7 +29,7 @@ class Relay:
 
 	# Set relay low. If user inputs a 1, reset lowTime as well
 	# Reset lowTime if you've used it, particularly if you've just triggered an event with it.
-	def setLow(self, reset = 0):
+	def setLow(self, reset = 1):
 		GPIO.output(self.pinNum, GPIO.LOW) # Backwards on my relay model (don't know why)
 		self.relayState = 0
 		if reset == 1:
@@ -37,7 +37,7 @@ class Relay:
 
 	# Set relay high. If user inputs a 1, reset highTime as well
 	# Reset highTime if you've used it, particularly if you've just triggered an event with it.
-	def setHigh(self, reset = 0):
+	def setHigh(self, reset = 1):
 		GPIO.output(self.pinNum, GPIO.HIGH) # Backwards on my relay model (don't know why)
 		self.relayState = 1
 		if reset == 1:
@@ -61,7 +61,7 @@ class Relay:
 	# Set relay high for one hour
 	def oneHour(self):
 		# Set the relay high
-		self.setHigh()
+		self.setHigh(0)
 
 		# Get current time and clip off everything that isn't hr:mn:sc
 		now = datetime.now()
@@ -87,7 +87,7 @@ class Relay:
 	def setMinutes(self, mode, delay): 
 		# If mode is "high," set relay high for [delay] minutes
 		if(mode == "high"):
-			self.setHigh()
+			self.setHigh(0)
 
 			# If input time is unset, get current time and clip off everything that isn't hr:mn:sc
 			if(self.lowTime == "unset"):
@@ -98,7 +98,7 @@ class Relay:
 
 		# Else if mode is "low," set relay low for [delay] minutes
 		elif(mode == "low"):
-			self.setHigh()
+			self.setLow(0)
 
 			# If input time is unset, get current time and clip off everything that isn't hr:mn:sc
 			if(self.highTime == "unset"):
@@ -167,22 +167,24 @@ try:
 	# Main loop
 	running = True
 	while running: 
-		now = datetime.now()
-		nowStr = str(now)[11:19]
-		nowStrW = str(datetime.today().weekday())+" "+str(datetime.now())[11:19]
 
-		# Check for a command in the input file
+		# Get the current time. This will be compared against other things later. 
+		now = datetime.now()
+		nowStr = str(now)[11:19] # Format as string
+		nowStrW = str(datetime.today().weekday())+" "+str(datetime.now())[11:19] # include weekday
+
+		# Check for a change in the input file
 		infile = open("input.txt", "r")
 		command = infile.read()
 		infile.close()
 		# If there's been a change, hold your damn horses and let the change finish.
-		# Wait for 0.1 seconds in case the change is still being written and then open again.
+		# Wait for 0.1 seconds in case the change is still being written and then open the file again.
 		if command.strip() != "nothing":
 			time.sleep(0.1)
 			infile = open("input.txt", "r")
 			command = infile.read()
 			infile.close()
-		# If command is "null," do nothing. Else, execute the command.
+		# If the command is "stop," end main loop and overwrite input file to reset command ("nothing")
 		if command.strip() == "stop":
 			running = False
 			# Overwrite command after executing
@@ -191,6 +193,7 @@ try:
 			infile.write(command)
 			infile.close()
 
+		# If command is "nothing," do nothing. Else, try to execute the command.
 		elif command.strip() != "nothing":
 			# Try to execute command. If command can't be executed, continue
 			try:
@@ -223,11 +226,11 @@ try:
 			# Sound alarm: blink every 10 seconds for 10 minutes or until a button is pressed
 			lamp.alarm()
 
-		# Press pushbutton 1
+		# Press pushbutton 1 to toggle the lamp
 		if (GPIO.input(PB1) == 1):
 			while(GPIO.input(PB1) == 1):
 				time.sleep(0.1)
-			# If double-pressed pushbutton 1
+			# If double-pressed pushbutton 1, set high for one minute (or add another minute)
 			temp = 0
 			doubleClick = 0
 			while (temp < 10000):
