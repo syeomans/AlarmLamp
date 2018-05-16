@@ -81,7 +81,7 @@ try:
 		# if (GPIO.input(PB3) == 1):
 		# 	while(GPIO.input(PB3) == 1):
 		# 		time.sleep(0.1)
-		if checkPin(PB3):
+		if fns.checkPin(PB3):
 			lamp.setMinutes("high", 1)
 
 # If keyboard interrupt
