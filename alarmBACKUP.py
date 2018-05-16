@@ -10,11 +10,13 @@ GPIO.setmode(GPIO.BOARD)
 RELAY = 11
 PB1 = 13
 PB2 = 15
+PB3 = 19
 
 # Pin setup
 # GPIO.setup(RELAY, GPIO.OUT) # moved to class initialization
 GPIO.setup(PB1, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(PB2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(PB3, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 # Class definition for Relay
 class Relay:
@@ -30,7 +32,7 @@ class Relay:
 	# Set relay low. If user inputs a 1, reset lowTime as well
 	# Reset lowTime if you've used it, particularly if you've just triggered an event with it.
 	def setLow(self, reset = 1):
-		GPIO.output(self.pinNum, GPIO.LOW) # Backwards on my relay model (don't know why)
+		GPIO.output(self.pinNum, GPIO.HIGH) # Backwards on my relay model (don't know why)
 		self.relayState = 0
 		if reset == 1:
 			self.lowTime = "unset"
@@ -38,7 +40,7 @@ class Relay:
 	# Set relay high. If user inputs a 1, reset highTime as well
 	# Reset highTime if you've used it, particularly if you've just triggered an event with it.
 	def setHigh(self, reset = 1):
-		GPIO.output(self.pinNum, GPIO.HIGH) # Backwards on my relay model (don't know why)
+		GPIO.output(self.pinNum, GPIO.LOW) # Backwards on my relay model (don't know why)
 		self.relayState = 1
 		if reset == 1:
 			self.highTime = "unset"
@@ -140,7 +142,7 @@ class Relay:
 
 	# Blink three times and set relay high for one hour
 	def alarm(self):
-		for i in range(0,3):
+		for i in range(0,2):
 			self.setHigh()
 			time.sleep(1)
 			self.setLow()
@@ -230,19 +232,8 @@ try:
 		if (GPIO.input(PB1) == 1):
 			while(GPIO.input(PB1) == 1):
 				time.sleep(0.1)
-			# If double-pressed pushbutton 1, set high for one minute (or add another minute)
-			temp = 0
-			doubleClick = 0
-			while (temp < 10000):
-				temp += 1
-				if (GPIO.input(PB1) == 1):
-					while(GPIO.input(PB1) == 1):
-						time.sleep(0.1)
-					doubleClick = 1
-					lamp.setMinutes("high", 1)
-					break
-			if(doubleClick == 0):
-				lamp.toggle()
+			# If pressed pushbutton 1, set high for one minute
+			lamp.toggle()
 
 		# Press pushbutton 2
 		if (GPIO.input(PB2) == 1):
@@ -250,10 +241,27 @@ try:
 				time.sleep(0.1)
 			lamp.setMinutes("high", 10)
 
+		# Press pushbutton 3
+		if (GPIO.input(PB3) == 1):
+			while(GPIO.input(PB3) == 1):
+				time.sleep(0.1)
+			lamp.setMinutes("high", 1)
+
 # If keyboard interrupt
 except KeyboardInterrupt:
 	GPIO.output(RELAY, GPIO.LOW)
 	
 # Exit cleanly
 finally:
+
+	# Blink quickly twice, then exit cleanly
+	lamp.setHigh()
+	time.sleep(0.5)
+	lamp.setLow()
+	time.sleep(0.5)
+	lamp.setHigh()
+	time.sleep(0.5)
+	lamp.setLow()
+	time.sleep(0.5)
+	
 	GPIO.cleanup()
