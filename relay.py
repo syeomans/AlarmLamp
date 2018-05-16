@@ -1,3 +1,5 @@
+import RPi.GPIO as GPIO
+
 # Class definition for Relay
 class Relay:
 	# Initialize relay

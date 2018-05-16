@@ -2,6 +2,7 @@ import time
 from datetime import datetime
 from relay import Relay
 import globalvars
+import RPi.GPIO as GPIO
 
 def blink(relay, n):
 	for i in range(0,n):
