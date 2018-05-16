@@ -68,7 +68,7 @@ try:
 		# 		time.sleep(0.1)
 		if fns.checkPin(PB1):
 			# If pressed pushbutton 1, set high for one minute
-			lamp.setMinutes("high", 60)
+			lamp.toggle()
 
 		# Press pushbutton 2
 		# if (GPIO.input(PB2) == 1):
