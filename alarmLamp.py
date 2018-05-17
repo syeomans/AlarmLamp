@@ -6,7 +6,7 @@ import RPi.GPIO as GPIO
 #from datetime import datetime
 from relay import Relay
 import fns
-from states import state
+import states
 
 # Pin definitions
 GPIO.setmode(GPIO.BOARD)
