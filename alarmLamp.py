@@ -6,6 +6,7 @@ import RPi.GPIO as GPIO
 #from datetime import datetime
 from relay import Relay
 import fns
+from states import state
 
 # Pin definitions
 GPIO.setmode(GPIO.BOARD)
@@ -28,29 +29,32 @@ fns.blink(lamp, 1)
 try:
 	# Main loop
 	running = True
+	thisState = "OnOff"
 	while running: 
 
-		# Check for lamp's high time. If now is lamp's high time, set high and reset high time.
-		lamp.checkHigh()
+		thisState = states.state(thisState, lamp)
 
-		# Check for lamp's low time.
-		lamp.checkLow()
+		# # Check for lamp's high time. If now is lamp's high time, set high and reset high time.
+		# lamp.checkHigh()
 
-		# Check for alarm times
-		if fns.checkAlarmTimes():
-			lamp.alarm()
+		# # Check for lamp's low time.
+		# lamp.checkLow()
 
-		# Press pushbutton 1 to toggle the lamp
-		if fns.checkPin(PB1):
-			lamp.toggle()
+		# # Check for alarm times
+		# if fns.checkAlarmTimes():
+		# 	lamp.alarm()
 
-		# Press pushbutton 2 to set high for 10 minutes
-		if fns.checkPin(PB2):
-			lamp.setMinutes("high", 10)
+		# # Press pushbutton 1 to toggle the lamp
+		# if fns.checkPin(PB1):
+		# 	lamp.toggle()
 
-		# Press pushbutton 3 to set high for 1 minute
-		if fns.checkPin(PB3):
-			lamp.setMinutes("high", 1)
+		# # Press pushbutton 2 to set high for 10 minutes
+		# if fns.checkPin(PB2):
+		# 	lamp.setMinutes("high", 10)
+
+		# # Press pushbutton 3 to set high for 1 minute
+		# if fns.checkPin(PB3):
+		# 	lamp.setMinutes("high", 1)
 
 # If keyboard interrupt
 except KeyboardInterrupt:

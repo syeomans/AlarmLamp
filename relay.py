@@ -97,7 +97,7 @@ class Relay:
 		timeMin = timeStr[3:5]
 		timeHr = timeStr[0:2]
 
-		# Add 10 to the minute
+		# Add to the minute
 		delMin = int(timeMin)+delay
 		if delMin >= 60:
 			delMin = "0"+str(delMin-60)
@@ -118,12 +118,3 @@ class Relay:
 			self.lowTime = delayedTime
 		elif(mode == "low"):
 			self.highTime = delayedTime
-
-	# Blink three times and set relay high for one hour
-	def alarm(self):
-		for i in range(0,2):
-			self.setHigh()
-			time.sleep(1)
-			self.setLow()
-			time.sleep(1)
-		self.setMinutes("high", 60)
