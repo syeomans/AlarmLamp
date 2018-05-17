@@ -1,9 +1,9 @@
 # This script controlls the relay attached to my alarm clock lamp.
 
 # Import modules
-import time
+#import time
 import RPi.GPIO as GPIO
-from datetime import datetime
+#from datetime import datetime
 from relay import Relay
 import fns
 

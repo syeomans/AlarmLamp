@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 from datetime import datetime
+import time
 
 # Class definition for Relay
 class Relay:
