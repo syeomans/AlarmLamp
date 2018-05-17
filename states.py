@@ -86,7 +86,7 @@ def state(st, relay):
 
 		# Test for this state
 		relay.toggle()
-		time.wait(1)
+		time.sleep(1)
 
 	# Alarm
 	# 	button 1 --> OnOff (set on for 60 minutes)
