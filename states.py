@@ -17,7 +17,7 @@ def state(st, relay):
 		highTime --> OnOff (and set high)
 		lowTime --> OnOff (and set low)
 	"""
-	if st = "OnOff":
+	if st == "OnOff":
 
 		# Check for alarm times
 		if fns.checkAlarmTimes():
@@ -49,7 +49,7 @@ def state(st, relay):
 		button 3 --> OnOff (and turn off)
 		15 minutes elapse --> Alarm
 	"""
-	elif st = "Music":
+	elif st == "Music":
 		now = datetime.now()
 		nowStr = str(now)[11:19] # Format as string
 
