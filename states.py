@@ -25,15 +25,15 @@ def state(st, relay):
 			return(outState)
 
 		# Press pushbutton 1 to toggle the lamp
-		if fns.checkPin(PB1):
+		if fns.checkPin(globalvars.PB1):
 			relay.toggle()
 
 		# Press pushbutton 2 to set high for 10 minutes
-		if fns.checkPin(PB2):
+		if fns.checkPin(globalvars.PB2):
 			relay.setMinutes("high", 10)
 
 		# Press pushbutton 3 to set high for 1 minute
-		if fns.checkPin(PB3):
+		if fns.checkPin(globalvars.PB3):
 			relay.setMinutes("high", 1)
 
 		# Check for lamp's high time. If now is lamp's high time, set high and reset high time.
@@ -62,19 +62,19 @@ def state(st, relay):
 			#fns.playMusic()
 
 		# Press pushbutton 1
-		if fns.checkPin(PB1):
+		if fns.checkPin(globalvars.PB1):
 			relay.setMinutes("high", 60)
 			globalvars.musicTriggered = False
 			return("OnOff")
 
 		# Press pushbutton 2
-		if fns.checkPin(PB2):
+		if fns.checkPin(globalvars.PB2):
 			relay.setLow()
 			globalvars.musicTriggered = False
 			return("OnOff")
 
 		# Press pushbutton 3
-		if fns.checkPin(PB3):
+		if fns.checkPin(globalvars.PB3):
 			relay.setLow()
 			globalvars.musicTriggered = False
 			return("OnOff")
@@ -93,7 +93,7 @@ def state(st, relay):
 	# 	button 2 --> OnOff (set off)
 	# 	button 3 --> OnOff (set off)
 	# 	15 minutes elapse --> OnOff (set off)
-	
+
 	elif st == "Alarm":
 		now = datetime.now()
 		nowStr = str(now)[11:19] # Format as string
@@ -107,19 +107,19 @@ def state(st, relay):
 			#fns.playMusic()
 
 		# Press pushbutton 1
-		if fns.checkPin(PB1):
+		if fns.checkPin(globalvars.PB1):
 			relay.setMinutes("high", 60)
 			globalvars.alarmTriggered = False
 			return("OnOff")
 
 		# Press pushbutton 2
-		if fns.checkPin(PB2):
+		if fns.checkPin(globalvars.PB2):
 			relay.setLow()
 			globalvars.alarmTriggered = False
 			return("OnOff")
 
 		# Press pushbutton 3
-		if fns.checkPin(PB3):
+		if fns.checkPin(globalvars.PB3):
 			relay.setLow()
 			globalvars.alarmTriggered = False
 			return("OnOff")

@@ -1,3 +1,10 @@
+# Pin definitions
+GPIO.setmode(GPIO.BOARD)
+RELAY = 11
+PB1 = 13
+PB2 = 15
+PB3 = 19
+
 # Read alarm times from times.txt
 alarmTimes = [line.strip() for line in open("times.txt", 'r')]
 

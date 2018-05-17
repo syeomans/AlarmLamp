@@ -7,13 +7,7 @@ import RPi.GPIO as GPIO
 from relay import Relay
 import fns
 import states
-
-# Pin definitions
-GPIO.setmode(GPIO.BOARD)
-RELAY = 11
-PB1 = 13
-PB2 = 15
-PB3 = 19
+from globalvars import *
 
 # Pin setup
 GPIO.setup(PB1, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
