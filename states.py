@@ -88,13 +88,12 @@ def state(st, relay):
 		relay.toggle()
 		time.wait(1)
 
-	"""
-	Alarm
-		button 1 --> OnOff (set on for 60 minutes)
-		button 2 --> OnOff (set off)
-		button 3 --> OnOff (set off)
-		15 minutes elapse --> OnOff (set off)
-	"""
+	# Alarm
+	# 	button 1 --> OnOff (set on for 60 minutes)
+	# 	button 2 --> OnOff (set off)
+	# 	button 3 --> OnOff (set off)
+	# 	15 minutes elapse --> OnOff (set off)
+	
 	elif st == "Alarm":
 		now = datetime.now()
 		nowStr = str(now)[11:19] # Format as string
