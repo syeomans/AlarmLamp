@@ -42,13 +42,13 @@ def state(st, relay):
 		# Check for lamp's low time.
 		relay.checkLow()
 
-	"""
-	Music
-		button 1 --> OnOff (and setMinutes("high", 60))
-		button 2 --> OnOff (and turn off)
-		button 3 --> OnOff (and turn off)
-		15 minutes elapse --> Alarm
-	"""
+	
+	# Music
+	# 	button 1 --> OnOff (and setMinutes("high", 60))
+	# 	button 2 --> OnOff (and turn off)
+	# 	button 3 --> OnOff (and turn off)
+	# 	15 minutes elapse --> Alarm
+	
 	elif st == "Music":
 		now = datetime.now()
 		nowStr = str(now)[11:19] # Format as string
