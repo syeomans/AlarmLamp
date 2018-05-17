@@ -16,6 +16,6 @@ musicTime = ""
 musicTimePlus = ""
 
 # Variables to store when Alarm state begins and 15 minutes past
-AlarmTriggered = False
-AlarmTime = ""
-AlarmTimePlus = ""
+alarmTriggered = False
+alarmTime = ""
+alarmTimePlus = ""
