@@ -126,5 +126,4 @@ class Relay:
 			time.sleep(1)
 			self.setLow()
 			time.sleep(1)
-		self.oneHour()
-		self.setHigh()
+		self.setMinutes("high", 60)
