@@ -132,7 +132,7 @@ def state(st, relay):
 
 		# Test for this state
 		relay.toggle()
-		time.wait(5)
+		time.sleep(3)
 
 	return(outState)
 
