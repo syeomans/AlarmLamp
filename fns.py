@@ -4,12 +4,12 @@ from relay import Relay
 import globalvars
 import RPi.GPIO as GPIO
 
-def blink(relay, n):
+def blink(relay, n, interval=1):
 	for i in range(0,n):
 		relay.setHigh()
-		time.sleep(1)
+		time.sleep(interval)
 		relay.setLow()
-		time.sleep(1)
+		time.sleep(interval)
 
 def checkPin(pin):
 	if (GPIO.input(pin) == 1):
