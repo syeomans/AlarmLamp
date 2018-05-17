@@ -1,3 +1,5 @@
+import RPi.GPIO as GPIO
+
 # Pin definitions
 GPIO.setmode(GPIO.BOARD)
 RELAY = 11
