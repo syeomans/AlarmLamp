@@ -36,9 +36,9 @@ def playMusic(file):
 
 def addMinutes(timeStr, delay):
 	# Separate hour, minute, second
-	timeSec = nowStr[6:8]
-	timeMin = nowStr[3:5]
-	timeHr = nowStr[0:2]
+	timeSec = timeStr[6:8]
+	timeMin = timeStr[3:5]
+	timeHr = timeStr[0:2]
 
 	# Add to the minute
 	delMin = int(timeMin)+delay
