@@ -68,6 +68,7 @@ def getNextState(st, relay):
 			globalvars.musicTriggered = True
 			globalvars.musicTime = nowStr
 			delayedTime = fns.addMinutes(nowStr, 15)
+			relay.setMinutes("high", 15)
 			globalvars.musicTimePlus = delayedTime
 			mixer.init()
 
