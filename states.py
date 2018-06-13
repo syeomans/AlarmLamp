@@ -25,7 +25,7 @@ def getNextState(st, relay):
 		try:
 			if mixer.music.get_busy() == 0:
 				mixer.quit()
-		except pygame.error:
+		except error:
 			pass
 
 
