@@ -1,0 +1,5 @@
+#!/bin/bash
+# Launches alarm.py inside a screen session, named Alarm
+
+#screen -dm -S 'Alarm_Lamp' bash -c "python alarmLamp.py"
+python alarmLamp.py
