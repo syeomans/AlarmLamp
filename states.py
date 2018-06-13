@@ -4,6 +4,8 @@ import globalvars
 import os
 import time
 from datetime import datetime
+from pygame import mixer
+import os, random
 
 def state(st, relay):
 	outState = st
@@ -57,36 +59,46 @@ def state(st, relay):
 		if globalvars.musicTriggered == False:
 			globalvars.musicTriggered = True
 			globalvars.musicTime = nowStr
-			delayedTime = fns.addMinutes(nowStr, 1)
+			delayedTime = fns.addMinutes(nowStr, 15)
 			globalvars.musicTimePlus = delayedTime
-			#fns.playMusic()
+			mixer.init()
+
+		# If a song is not playing, select one randomly
+		if mixer.music.getbusy() == 0:
+			song = random.choice(os.listdir(globalvars.folder))
+			mixer.music.load(globalvars.folder + '/' + song)
+			mixer.music.play()
 
 		# Press pushbutton 1
 		if fns.checkPin(globalvars.PB1):
 			relay.setMinutes("high", 60)
 			globalvars.musicTriggered = False
+			mixer.music.stop()
 			return("OnOff")
 
 		# Press pushbutton 2
 		if fns.checkPin(globalvars.PB2):
 			relay.setLow()
 			globalvars.musicTriggered = False
+			#mixer.music.stop()
 			return("OnOff")
 
 		# Press pushbutton 3
 		if fns.checkPin(globalvars.PB3):
 			relay.setLow()
 			globalvars.musicTriggered = False
+			mixer.music.stop()
 			return("OnOff")
 
 		# If 15 minutes have passed
 		if nowStr == globalvars.musicTimePlus:
 			globalvars.musicTriggered = False
+			mixer.music.stop()
 			return("Alarm")
 
 		# Test for this state
-		relay.toggle()
-		time.sleep(10)
+		#relay.toggle()
+		#time.sleep(10)
 
 	# Alarm
 	# 	button 1 --> OnOff (set on for 60 minutes)
@@ -102,37 +114,46 @@ def state(st, relay):
 		if globalvars.alarmTriggered == False:
 			globalvars.alarmTriggered = True
 			globalvars.alarmTime = nowStr
-			delayedTime = fns.addMinutes(nowStr, 1)
+			delayedTime = fns.addMinutes(nowStr, 5)
 			globalvars.alarmTimePlus = delayedTime
-			#fns.playMusic()
+
+		# If alarm is not playing, play it again
+		if mixer.music.getbusy() == 0:
+			song = random.choice(os.listdir(globalvars.folder))
+			mixer.music.load(globalvars.folder + '/' + song)
+			mixer.music.play()
 
 		# Press pushbutton 1
 		if fns.checkPin(globalvars.PB1):
+			mixer.music.stop()
 			relay.setMinutes("high", 60)
 			globalvars.alarmTriggered = False
 			return("OnOff")
 
 		# Press pushbutton 2
 		if fns.checkPin(globalvars.PB2):
+			mixer.music.stop()
 			relay.setLow()
 			globalvars.alarmTriggered = False
 			return("OnOff")
 
 		# Press pushbutton 3
 		if fns.checkPin(globalvars.PB3):
+			mixer.music.stop()
 			relay.setLow()
 			globalvars.alarmTriggered = False
 			return("OnOff")
 
-		# If 15 minutes have passed
+		# If 5 minutes have passed
 		if nowStr == globalvars.alarmTimePlus:
+			mixer.music.stop()
 			relay.setLow()
 			globalvars.alarmTriggered = False
 			return("OnOff")
 
-		# Test for this state
-		relay.toggle()
-		time.sleep(3)
+		# # Test for this state
+		# relay.toggle()
+		# time.sleep(3)
 
 	return(outState)
 

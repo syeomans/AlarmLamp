@@ -19,3 +19,6 @@ musicTimePlus = ""
 alarmTriggered = False
 alarmTime = ""
 alarmTimePlus = ""
+
+# Folder to read music from
+folder = "/media/usbstick/"
