@@ -21,8 +21,13 @@ def getNextState(st, relay):
 	"""
 	if st == "OnOff":
 
-		# Stop mixer to stop the hideous white noise
-		mixer.quit()
+		# If a song is not playing, stop mixer
+		try:
+			if mixer.music.get_busy() == 0:
+				mixer.quit()
+		except pygame.error:
+			pass
+
 
 		# Check for alarm times
 		if fns.checkAlarmTimes():
