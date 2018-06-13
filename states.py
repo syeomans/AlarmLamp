@@ -122,7 +122,7 @@ def getNextState(st, relay):
 
 		# If alarm is not playing, play it again
 		if mixer.music.get_busy() == 0:
-			song = random.choice(os.listdir(globalvars.folder))
+			song = random.choice(os.listdir(globalvars.folder+'/AnnoyingAlarm'))
 			mixer.music.load(globalvars.folder + '/AnnoyingAlarm/' + song)
 			mixer.music.play()
 
