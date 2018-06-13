@@ -21,9 +21,8 @@ def getNextState(st, relay):
 	"""
 	if st == "OnOff":
 
-		# If a song is not playing, stop mixer
-		if mixer.music.get_busy() == 0:
-			mixer.quit()
+		# Stop mixer to stop the hideous white noise
+		mixer.quit()
 
 		# Check for alarm times
 		if fns.checkAlarmTimes():
@@ -90,14 +89,12 @@ def getNextState(st, relay):
 			relay.setLow()
 			globalvars.musicTriggered = False
 			mixer.music.stop()
-			mixer.quit()
 			return("OnOff")
 
 		# If 15 minutes have passed
 		if nowStr == globalvars.musicTimePlus:
 			globalvars.musicTriggered = False
 			mixer.music.stop()
-			mixer.quit()
 			return("Alarm")
 
 	# Alarm
@@ -127,7 +124,6 @@ def getNextState(st, relay):
 		# Press pushbutton 1
 		if fns.checkPin(globalvars.PB1):
 			mixer.music.stop()
-			mixer.quit()
 			relay.setMinutes("high", 60)
 			globalvars.alarmTriggered = False
 			return("OnOff")
@@ -135,7 +131,6 @@ def getNextState(st, relay):
 		# Press pushbutton 2
 		if fns.checkPin(globalvars.PB2):
 			mixer.music.stop()
-			mixer.quit()
 			relay.setLow()
 			globalvars.alarmTriggered = False
 			return("OnOff")
@@ -143,7 +138,6 @@ def getNextState(st, relay):
 		# Press pushbutton 3
 		if fns.checkPin(globalvars.PB3):
 			mixer.music.stop()
-			mixer.quit()
 			relay.setLow()
 			globalvars.alarmTriggered = False
 			return("OnOff")
@@ -151,7 +145,6 @@ def getNextState(st, relay):
 		# If 5 minutes have passed
 		if nowStr == globalvars.alarmTimePlus:
 			mixer.music.stop()
-			mixer.quit()
 			relay.setLow()
 			globalvars.alarmTriggered = False
 			return("OnOff")
