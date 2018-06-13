@@ -27,13 +27,6 @@ def checkAlarmTimes():
 	else:
 		return(False)
 
-# def playMusic(file):
-# 	pygame.mixer.init()
-# 	pygame.mixer.music.load(file)
-# 	pygame.mixer.music.play()
-# 	while pygame.mixer.music.get_busy() == True:
-# 	    continue
-
 def addMinutes(timeStr, delay):
 	# Separate hour, minute, second
 	timeSec = timeStr[6:8]

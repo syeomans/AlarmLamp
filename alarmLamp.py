@@ -25,31 +25,7 @@ try:
 	running = True
 	thisState = "OnOff"
 	while running: 
-
 		thisState = states.getNextState(thisState, lamp)
-		print(thisState)
-
-		# # Check for lamp's high time. If now is lamp's high time, set high and reset high time.
-		# lamp.checkHigh()
-
-		# # Check for lamp's low time.
-		# lamp.checkLow()
-
-		# # Check for alarm times
-		# if fns.checkAlarmTimes():
-		# 	lamp.alarm()
-
-		# # Press pushbutton 1 to toggle the lamp
-		# if fns.checkPin(PB1):
-		# 	lamp.toggle()
-
-		# # Press pushbutton 2 to set high for 10 minutes
-		# if fns.checkPin(PB2):
-		# 	lamp.setMinutes("high", 10)
-
-		# # Press pushbutton 3 to set high for 1 minute
-		# if fns.checkPin(PB3):
-		# 	lamp.setMinutes("high", 1)
 
 # If keyboard interrupt
 except KeyboardInterrupt:
