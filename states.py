@@ -55,7 +55,7 @@ def getNextState(st, relay):
 	
 	# Music
 	# 	button 1 --> OnOff (play through song and setMinutes("high", 60))
-	# 	button 2 --> OnOff (play through song and turn off)
+	# 	button 2 --> OnOff (stop music setMinutes("high", 60))
 	# 	button 3 --> OnOff (stop music and turn off)
 	# 	15 minutes elapse --> Alarm
 	
@@ -85,8 +85,9 @@ def getNextState(st, relay):
 
 		# Press pushbutton 2
 		if fns.checkPin(globalvars.PB2):
-			relay.setLow()
+			relay.setMinutes("high", 60)
 			globalvars.musicTriggered = False
+			mixer.music.stop()
 			return("OnOff")
 
 		# Press pushbutton 3
