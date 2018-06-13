@@ -21,6 +21,10 @@ def getNextState(st, relay):
 	"""
 	if st == "OnOff":
 
+		# If a song is not playing, stop mixer
+		if mixer.music.get_busy() == 0:
+			mixer.quit()
+
 		# Check for alarm times
 		if fns.checkAlarmTimes():
 			outState = "Music"
@@ -46,9 +50,9 @@ def getNextState(st, relay):
 
 	
 	# Music
-	# 	button 1 --> OnOff (and setMinutes("high", 60))
-	# 	button 2 --> OnOff (and turn off)
-	# 	button 3 --> OnOff (and turn off)
+	# 	button 1 --> OnOff (play through song and setMinutes("high", 60))
+	# 	button 2 --> OnOff (play through song and turn off)
+	# 	button 3 --> OnOff (stop music and turn off)
 	# 	15 minutes elapse --> Alarm
 	
 	elif st == "Music":
@@ -73,15 +77,12 @@ def getNextState(st, relay):
 		if fns.checkPin(globalvars.PB1):
 			relay.setMinutes("high", 60)
 			globalvars.musicTriggered = False
-			mixer.music.stop()
-			mixer.quit()
 			return("OnOff")
 
 		# Press pushbutton 2
 		if fns.checkPin(globalvars.PB2):
 			relay.setLow()
 			globalvars.musicTriggered = False
-			#mixer.music.stop()
 			return("OnOff")
 
 		# Press pushbutton 3
@@ -89,17 +90,15 @@ def getNextState(st, relay):
 			relay.setLow()
 			globalvars.musicTriggered = False
 			mixer.music.stop()
+			mixer.quit()
 			return("OnOff")
 
 		# If 15 minutes have passed
 		if nowStr == globalvars.musicTimePlus:
 			globalvars.musicTriggered = False
 			mixer.music.stop()
+			mixer.quit()
 			return("Alarm")
-
-		# Test for this state
-		#relay.toggle()
-		#time.sleep(10)
 
 	# Alarm
 	# 	button 1 --> OnOff (set on for 60 minutes)
@@ -117,16 +116,18 @@ def getNextState(st, relay):
 			globalvars.alarmTime = nowStr
 			delayedTime = fns.addMinutes(nowStr, 5)
 			globalvars.alarmTimePlus = delayedTime
+			mixer.init()
 
 		# If alarm is not playing, play it again
 		if mixer.music.getbusy() == 0:
 			song = random.choice(os.listdir(globalvars.folder))
-			mixer.music.load(globalvars.folder + '/' + song)
+			mixer.music.load(globalvars.folder + '/AnnoyingAlarm/' + song)
 			mixer.music.play()
 
 		# Press pushbutton 1
 		if fns.checkPin(globalvars.PB1):
 			mixer.music.stop()
+			mixer.quit()
 			relay.setMinutes("high", 60)
 			globalvars.alarmTriggered = False
 			return("OnOff")
@@ -134,6 +135,7 @@ def getNextState(st, relay):
 		# Press pushbutton 2
 		if fns.checkPin(globalvars.PB2):
 			mixer.music.stop()
+			mixer.quit()
 			relay.setLow()
 			globalvars.alarmTriggered = False
 			return("OnOff")
@@ -141,6 +143,7 @@ def getNextState(st, relay):
 		# Press pushbutton 3
 		if fns.checkPin(globalvars.PB3):
 			mixer.music.stop()
+			mixer.quit()
 			relay.setLow()
 			globalvars.alarmTriggered = False
 			return("OnOff")
@@ -148,13 +151,10 @@ def getNextState(st, relay):
 		# If 5 minutes have passed
 		if nowStr == globalvars.alarmTimePlus:
 			mixer.music.stop()
+			mixer.quit()
 			relay.setLow()
 			globalvars.alarmTriggered = False
 			return("OnOff")
-
-		# # Test for this state
-		# relay.toggle()
-		# time.sleep(3)
 
 	return(outState)
 
