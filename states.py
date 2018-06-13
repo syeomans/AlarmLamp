@@ -74,6 +74,7 @@ def getNextState(st, relay):
 			relay.setMinutes("high", 60)
 			globalvars.musicTriggered = False
 			mixer.music.stop()
+			mixer.quit()
 			return("OnOff")
 
 		# Press pushbutton 2
