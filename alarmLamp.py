@@ -26,7 +26,7 @@ try:
 	thisState = "OnOff"
 	while running: 
 
-		thisState = states.state(thisState, lamp)
+		thisState = states.getNextState(thisState, lamp)
 
 		# # Check for lamp's high time. If now is lamp's high time, set high and reset high time.
 		# lamp.checkHigh()

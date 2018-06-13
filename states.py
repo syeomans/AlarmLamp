@@ -7,7 +7,7 @@ from datetime import datetime
 from pygame import mixer
 import os, random
 
-def state(st, relay):
+def getNextState(st, relay):
 	outState = st
 
 	"""
@@ -64,7 +64,7 @@ def state(st, relay):
 			mixer.init()
 
 		# If a song is not playing, select one randomly
-		if mixer.music.getbusy() == 0:
+		if mixer.music.get_busy() == 0:
 			song = random.choice(os.listdir(globalvars.folder))
 			mixer.music.load(globalvars.folder + '/' + song)
 			mixer.music.play()
