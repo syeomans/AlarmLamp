@@ -23,7 +23,7 @@ fns.blink(lamp, 1)
 try:
 	# Main loop
 	running = True
-	thisState = "Music"
+	thisState = "OnOff"
 	while running: 
 		thisState = states.getNextState(thisState, lamp)
 
